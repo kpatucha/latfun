@@ -35,18 +35,18 @@ k_2 = 2*np.pi*np.linalg.inv([d_1,d_2]).T[1]
       
 @_util._fun2D    
 def disp(kx,ky):
-    r"""Dispersion relation for 2D square lattice (dimensionless).
+    """Dispersion relation for 2D square lattice (dimensionless).
     
-    .. math:: E(`kx`,`ky`) = -2\cos(`kx`) - 2\cos(`ky`)
+    .. math:: E(kx,ky) = -2\cos(kx) - 2\cos(ky)
     Dispersion relation for 2D square lattice with nearest neighbour
     hopping/coupling.
-    Includes negative sign, has minimum at (`kx`,`ky`) = (0,0)
+    Includes negative sign, has minimum at (`kx,ky`) = (0,0)
     
     Parameters
     ----------
     
     kx,ky : array_like
-        wave vector, assuming lattice constant a=1
+       wave vector, assuming lattice constant a=1
         
     Returns
     -------

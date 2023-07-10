@@ -17,6 +17,7 @@
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/sphinx_highlight.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -47,8 +48,19 @@
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">latfun</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">latfun package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#latfun-square-module">latfun.square module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-latfun.square">latfun.square module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#latfun.square.BRAVAIS_LATTICE"><code class="docutils literal notranslate"><span class="pre">BRAVAIS_LATTICE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#latfun.square.HSL"><code class="docutils literal notranslate"><span class="pre">HSL()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#latfun.square.N_BANDS"><code class="docutils literal notranslate"><span class="pre">N_BANDS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#latfun.square.disp"><code class="docutils literal notranslate"><span class="pre">disp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#latfun.square.disp_disc"><code class="docutils literal notranslate"><span class="pre">disp_disc()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#latfun.square.dos"><code class="docutils literal notranslate"><span class="pre">dos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#latfun.square.dos_disc"><code class="docutils literal notranslate"><span class="pre">dos_disc()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#latfun.square.gdos"><code class="docutils literal notranslate"><span class="pre">gdos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#latfun.square.gdos_disc"><code class="docutils literal notranslate"><span class="pre">gdos_disc()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-latfun">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -85,11 +97,113 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 </section>
-<section id="latfun-square-module">
-<h2>latfun.square module<a class="headerlink" href="#latfun-square-module" title="Permalink to this heading"></a></h2>
+<section id="module-latfun.square">
+<span id="latfun-square-module"></span><h2>latfun.square module<a class="headerlink" href="#module-latfun.square" title="Permalink to this heading"></a></h2>
+<p>2D square lattice.</p>
+<p>Useful properties of infinite 2D square lattice with nearest neighbours 
+hopping/coupling. Can be used in e.g. tight-binding type models.</p>
+<p>Everything is expressed in units of nearest neighbours hopping. By 
+convention, normalized dispersion has a minimum at :math: ‘mathbf{k} = 0’ 
+and has the following form
+.. math:: E(mathbf{k}) = -2cos(k_x) - 2cos(k_y)</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="latfun.square.BRAVAIS_LATTICE">
+<span class="sig-prename descclassname"><span class="pre">latfun.square.</span></span><span class="sig-name descname"><span class="pre">BRAVAIS_LATTICE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'tp'</span></em><a class="headerlink" href="#latfun.square.BRAVAIS_LATTICE" title="Permalink to this definition"></a></dt>
+<dd><p>Tetragonal primitive</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="latfun.square.HSL">
+<span class="sig-prename descclassname"><span class="pre">latfun.square.</span></span><span class="sig-name descname"><span class="pre">HSL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#latfun.square.HSL" title="Permalink to this definition"></a></dt>
+<dd><p>High symmetry lines for %s lattice.</p>
+<dl class="simple">
+<dt>Returns - kx,ky,k </dt><dd><p>kx,ky- coordinates of points along HSL
+k - auxiliary variable for plotting with appropriatly scaled distances</p>
+</dd>
+</dl>
+<p>N - number of points along each high symmetry line</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="latfun.square.N_BANDS">
+<span class="sig-prename descclassname"><span class="pre">latfun.square.</span></span><span class="sig-name descname"><span class="pre">N_BANDS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#latfun.square.N_BANDS" title="Permalink to this definition"></a></dt>
+<dd><p>Number of bands</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="latfun.square.disp">
+<span class="sig-prename descclassname"><span class="pre">latfun.square.</span></span><span class="sig-name descname"><span class="pre">disp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ky</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#latfun.square.disp" title="Permalink to this definition"></a></dt>
+<dd><p>Dispersion relation for 2D square lattice (dimensionless).</p>
+<div class="math notranslate nohighlight">
+\[E(kx,ky) = -2\cos(kx) - 2\cos(ky)\]</div>
+<p>Dispersion relation for 2D square lattice with nearest neighbour
+hopping/coupling.
+Includes negative sign, has minimum at (<cite>kx</cite>,`ky`) = (0,0)</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>kx,ky</strong> : array_like</p>
+<blockquote>
+<div><p>wave vector, assuming lattice constant a=1</p>
+</div></blockquote>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>disp</strong> : array_like</p>
+<blockquote>
+<div><p>Dispersion for given wave vector (kx,ky), same size as kx (ky).</p>
+</div></blockquote>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="latfun.square.disp_disc">
+<span class="sig-prename descclassname"><span class="pre">latfun.square.</span></span><span class="sig-name descname"><span class="pre">disp_disc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N_1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N_2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#latfun.square.disp_disc" title="Permalink to this definition"></a></dt>
+<dd><p>Discretized dispersion relation for %s lattice (dimensionless).</p>
+<p>Returns kx,ky,disp - wave vectors and values of dispersion (meshgrid form)
+N_1,N_2 - number of points in respective directions of primitive reciprocal vectors (default 100)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="latfun.square.dos">
+<span class="sig-prename descclassname"><span class="pre">latfun.square.</span></span><span class="sig-name descname"><span class="pre">dos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">E</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#latfun.square.dos" title="Permalink to this definition"></a></dt>
+<dd><p>Denisty of states for %s lattice.</p>
+<p>Returns value(s) of DoS
+E - normalized, dimensionless energy
+sing - if singularity should be included (near E=0)</p>
+<blockquote>
+<div><p>True - np.inf near E=0
+False - replaced with 18.927117802238033</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="latfun.square.dos_disc">
+<span class="sig-prename descclassname"><span class="pre">latfun.square.</span></span><span class="sig-name descname"><span class="pre">dos_disc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#latfun.square.dos_disc" title="Permalink to this definition"></a></dt>
+<dd><p>Discretized Denisty of States for %s lattice.</p>
+<p>Returns E,rho - arguments (normalized, dimensionless energy) and corresponding values of DoS
+N - number of points (default 10**5)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="latfun.square.gdos">
+<span class="sig-prename descclassname"><span class="pre">latfun.square.</span></span><span class="sig-name descname"><span class="pre">gdos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">E</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#latfun.square.gdos" title="Permalink to this definition"></a></dt>
+<dd><p>Generalized density of states for %s lattice.
+Weighted by d^2 E(k)/d kx^2</p>
+<p>Returns value(s) of GDoS
+E - normalized, dimensionless energy</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="latfun.square.gdos_disc">
+<span class="sig-prename descclassname"><span class="pre">latfun.square.</span></span><span class="sig-name descname"><span class="pre">gdos_disc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#latfun.square.gdos_disc" title="Permalink to this definition"></a></dt>
+<dd><p>Discretized Generalized Denisty of States for %s lattice.</p>
+<p>Returns E,rho - arguments (normalized, dimensionless energy) and corresponding values of GDoS
+N - number of points (default 10**5)</p>
+</dd></dl>
+
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this heading"></a></h2>
+<section id="module-latfun">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-latfun" title="Permalink to this heading"></a></h2>
 </section>
 </section>
 

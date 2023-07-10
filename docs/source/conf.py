@@ -19,8 +19,9 @@ release = '0.1'
 # add these directories to sys.path here.
 import os
 import sys
+#import latfun
 
-sys.path.insert(0, os.path.abspath('../'))
+sys.path.insert(0, os.path.abspath('../..'))
 
 
 extensions = [
