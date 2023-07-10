@@ -1,5 +1,5 @@
 Latfun
 =======
 
-*What is this?
-*How to install?
+* What is this?
+* How to install?
