@@ -1,19 +1,19 @@
 import numpy as np
-from functools import wraps
+from functools import wraps,partial
 
 def _fun2D(fun):
     @wraps(fun)
     def result(kx,ky,*args,**kwargs):
-        b = np.shape(fun(0,0,*args,**kwargs))
         if np.shape(kx) != np.shape(ky):
             print("kx and ky shape mismatch")
             return None 
         else:
-            
+            sh_0 = np.shape(fun(0,0,*args,**kwargs))
             x = np.asarray(kx)
             y = np.asarray(ky)
-            en_temp = np.array(list(map(fun,x.flatten(),y.flatten())))
-            en = np.reshape(en_temp.T,b+kx.shape)
+            fun_temp = partial(fun,*args,**kwargs)
+            en_temp = np.array(list(map(fun_temp,x.flatten(),y.flatten())))
+            en = np.reshape(en_temp.T,sh_0+kx.shape)
         
             return en     
     
