@@ -4,9 +4,9 @@ Useful properties of infinite 2D square lattice with nearest neighbours
 hopping/coupling. Can be used in e.g. tight-binding type models.
 
 Everything is expressed in units of nearest neighbours hopping. By 
-convention, normalized dispersion has a minimum at :math: '\mathbf{k} = 0' 
+convention, normalized dispersion has a minimum at k = 0 
 and has the following form
-.. math:: E(\mathbf{k}) = -2\cos(k_x) - 2\cos(k_y)
+.. math:: E(\mathbf{k}) = -2\cos(kx) - 2\cos(ky)
 
 """
 import numpy as np
@@ -23,16 +23,20 @@ N_BANDS = 1
 """
 
 E_MIN,E_MAX = -4,4
+"""Minimal and maximal values of dispersion
+"""
+
 BANDWIDTH = E_MAX-E_MIN
+"""Total bandwidth
+"""
 
-#in units of bond length
-d_1 = np.array([1,0])
-d_2 = np.array([0,1])
+d_1,d_2 = np.array([1,0]),np.array([0,1])
+"""Primitive vectors
+"""
 
-
-k_1 = 2*np.pi*np.linalg.inv([d_1,d_2]).T[0]  
-k_2 = 2*np.pi*np.linalg.inv([d_1,d_2]).T[1]
-      
+k_1,k_2 = 2*np.pi*np.linalg.inv([d_1,d_2]).T[0] , 2*np.pi*np.linalg.inv([d_1,d_2]).T[1] 
+"""Primitive vectors in reciprocal space
+"""
 @_util._fun2D    
 def disp(kx,ky):
     """Dispersion relation for 2D square lattice (dimensionless).
