@@ -1,5 +1,5 @@
 import latfun.square
-#import lattices._util
+#import latfun._util
 #import lattices.chain
 #import lattices.cubic
 #import lattices.triangular

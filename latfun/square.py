@@ -6,7 +6,8 @@ hopping/coupling. Can be used in e.g. tight-binding type models.
 Everything is expressed in units of nearest neighbours hopping. By 
 convention, normalized dispersion has a minimum at k = 0 
 and has the following form
-.. math:: E(\mathbf{k}) = -2\cos(kx) - 2\cos(ky)
+.. math::
+   E(k_x,k_y) = -2\cos(k_x) - 2\cos(k_y)
 
 """
 import numpy as np
@@ -15,77 +16,107 @@ from . import _util
 
 
 BRAVAIS_LATTICE = 'tp'
-"""Tetragonal primitive
+r"""Tetragonal primitive
 """
 
 N_BANDS = 1
-"""Number of bands
+r"""Number of bands
 """
 
 E_MIN,E_MAX = -4,4
-"""Minimal and maximal values of dispersion
+r"""Minimal and maximal values of dispersion
 """
 
 BANDWIDTH = E_MAX-E_MIN
-"""Total bandwidth
+r"""Total bandwidth
 """
 
 d_1,d_2 = np.array([1,0]),np.array([0,1])
-"""Primitive vectors
+r"""Primitive vectors
 """
 
 k_1,k_2 = 2*np.pi*np.linalg.inv([d_1,d_2]).T[0] , 2*np.pi*np.linalg.inv([d_1,d_2]).T[1] 
-"""Primitive vectors in reciprocal space
+r"""Primitive vectors in reciprocal space
 """
-@_util._fun2D    
+
+#@_util._fun2D    
 def disp(kx,ky):
-    """Dispersion relation for 2D square lattice (dimensionless).
+    r"""Dispersion relation for 2D square lattice (dimensionless).
     
-    .. math:: E(kx,ky) = -2\cos(kx) - 2\cos(ky)
+    .. math::
+       E(k_x,k_y) = -2\cos(k_x) - 2\cos(k_y)
+        
     Dispersion relation for 2D square lattice with nearest neighbour
-    hopping/coupling.
-    Includes negative sign, has minimum at (`kx,ky`) = (0,0)
+    hopping/coupling. Dimensionless - in units of NN hopping.
     
     Parameters
     ----------
     
-    kx,ky : array_like
-       wave vector, assuming lattice constant a=1
+    kx,ky : float np.ndarray or float
+       wave vector (assuming lattice constant a=1)
         
     Returns
     -------
-    disp : array_like
-        Dispersion for given wave vector (kx,ky), same size as kx (ky).
+    disp : float np.ndarray or float
+        Dispersion for given wave vector (kx,ky), same length as kx (ky).
     """
     return -2*np.cos(kx) - 2*np.cos(ky)
 
 
-def dos(E,sing=False):
-    """Denisty of states for %s lattice.
+def dos(E,singularity=False):
+    r"""Denisty of states for 2D square lattice.
     
-    Returns value(s) of DoS
-    E - normalized, dimensionless energy
-    sing - if singularity should be included (near E=0)
-        True - np.inf near E=0
-        False - replaced with 18.927117802238033
+    Parameters
+    ----------
+    
+    E : float np.ndarray or float
+       Energy (dimensionless - in units of NN hopping).
+       
+    singularity : bool, optional
+       If `singularity`, return singularity near E=0,
+       otherwise return machine limit value for the DoS (defualt = False)
+   
+    Returns
+    -------
+    
+    rho : float np.ndarray or float
+       Value(s) of DoS for given energies `E`
     """
     
     E = np.asarray(E,dtype=float)
     rho = np.zeros_like(E)
-    nonzero = np.abs(E) <=4
+    nonzero = (E>=E_MIN) and (E<=E_MAX)
     
     rho[nonzero] = 1/(2*np.pi**2)*special.ellipkm1(E[nonzero]**2/16)
     
-    #18.927117802238033 is a value returned near singularity
-    #handling arrays and single numbers
-    if sing:
+    
+    if singularity:
         return rho    
     else:
-        rho = np.asarray(rho)
-        rho[rho==np.inf] = 18.927117802238033
-        rho[rho<0] = 18.927117802238033
+        rho_at_singularity = 1/(2*np.pi**2)*special.ellipkm1(np.finfo(float).smallest_subnormal)
+        rho[rho==np.inf] = rho_at_singularity
+        rho[rho<0] = rho_at_singularity
         return rho
+
+
+def HSL(N=100):
+    r"""High symmetry lines for 2D quare lattice.
     
+    Parameters
+    ----------
+    
+    N : integer
+        Number of points per line (for the total of N*number of lines)
+    
+    Returns
+    -------
+    
+    kx,ky,k : float np.ndarray
+       kx,ky - coordinates along HSL
+       k - auxiliary variable with approriatly scalesd distances
+    """    
+    return _util._HSL2D(BRAVAIS_LATTICE,k_1,k_2,N=N)
+
 
 def gdos(E):
     """Generalized density of states for %s lattice.
@@ -104,17 +135,6 @@ def gdos(E):
     grho[E==0] = 0.4052847345693511
     grho[E**2==0] = 0.4052847345693511
     return grho 
-
-
-def HSL(N=100):
-    """High symmetry lines for %s lattice.
-    
-    Returns - kx,ky,k 
-        kx,ky- coordinates of points along HSL
-        k - auxiliary variable for plotting with appropriatly scaled distances
-    N - number of points along each high symmetry line    
-    """    
-    return _util._HSL2D(BRAVAIS_LATTICE,k_1,k_2,N=N)
 
 
 def disp_disc(N_1=100,N_2=100):
