@@ -1,10 +1,10 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Sep  9 17:37:45 2023
-
-@author: Konrad
-"""
-
 import latfun
+import numpy as np
+import matplotlib.pyplot as plt
 
-latfun.
+x = np.linspace(-10**(-5), 10**(-5), 10**7)
+dos = latfun.square.dos(x)
+plt.plot(x, dos)
+plt.show()
+
+

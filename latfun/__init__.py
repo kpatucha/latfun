@@ -1,5 +1,15 @@
+r"""Functions related to tight-binding lattices.
+
+.. autosummary::
+   :toctree: generated
+
+   square
+   hsl_2d
+"""
 import latfun.square
-#import latfun._util
+import latfun.triangular
+from latfun._util import hsl_2d, _timing
+
 #import lattices.chain
 #import lattices.cubic
 #import lattices.triangular

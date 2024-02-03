@@ -1,174 +1,119 @@
-r"""2D square lattice.
+r"""2D square lattice
 
 Useful properties of infinite 2D square lattice with nearest neighbours 
 hopping/coupling. Can be used in e.g. tight-binding type models.
 
 Everything is expressed in units of nearest neighbours hopping. By 
-convention, normalized dispersion has a minimum at k = 0 
+convention, normalized dispersion has a minimum at :math:`k = 0`
 and has the following form
-.. math::
-   E(k_x,k_y) = -2\cos(k_x) - 2\cos(k_y)
+
+.. math:: E(k_x,k_y) = -2\cos(k_x) - 2\cos(k_y)
 
 """
+
 import numpy as np
 from scipy import special
 from . import _util
 
-
 BRAVAIS_LATTICE = 'tp'
-r"""Tetragonal primitive
-"""
+r"""Tetragonal primitive"""
 
 N_BANDS = 1
-r"""Number of bands
-"""
+r"""Number of bands = 1"""
 
-E_MIN,E_MAX = -4,4
-r"""Minimal and maximal values of dispersion
-"""
+E_MIN = -4
+r"""Minimal value of the dispersion = -4"""
+
+E_MAX = 4
+r"""Maximal value of dispersion = 4"""
 
 BANDWIDTH = E_MAX-E_MIN
-r"""Total bandwidth
-"""
+r"""Total bandwidth = 8"""
 
-d_1,d_2 = np.array([1,0]),np.array([0,1])
-r"""Primitive vectors
-"""
+D_1 = np.array([1, 0])
+r"""Primitive vector :math:`d_1 = (1,0)`"""
 
-k_1,k_2 = 2*np.pi*np.linalg.inv([d_1,d_2]).T[0] , 2*np.pi*np.linalg.inv([d_1,d_2]).T[1] 
-r"""Primitive vectors in reciprocal space
-"""
+D_2 = np.array([0, 1])
+r"""Primitive vector :math:`d_2 = (0,1)`"""
 
-#@_util._fun2D    
-def disp(kx,ky):
+K_1 = 2*np.pi*np.linalg.inv([D_1, D_2]).T[0]
+r"""Primitive vector in reciprocal space :math:`k_1 = (2\pi,0)`"""
+
+K_2 = 2*np.pi*np.linalg.inv([D_1, D_2]).T[1]
+r"""Primitive vector in reciprocal space :math:`k_2 = (0,2\pi)`"""
+
+
+def disp(kx, ky):
     r"""Dispersion relation for 2D square lattice (dimensionless).
-    
-    .. math::
-       E(k_x,k_y) = -2\cos(k_x) - 2\cos(k_y)
         
-    Dispersion relation for 2D square lattice with nearest neighbour
-    hopping/coupling. Dimensionless - in units of NN hopping.
+    Dispersion relation for wave vector (`kx`, `ky`). `kx` and `ky` should be
+    the same size. They can be single numbers or arrays (e.g. in meshgrid format).
     
     Parameters
     ----------
-    
-    kx,ky : float np.ndarray or float
-       wave vector (assuming lattice constant a=1)
+    kx, ky : array_like
+        Wave vector (assuming lattice constant a=1).
         
     Returns
     -------
-    disp : float np.ndarray or float
-        Dispersion for given wave vector (kx,ky), same length as kx (ky).
+    disp : array_like
+        Dispersion for given wave vector (`kx`, `ky`), same length as `kx` (`ky`). Dimensionless (in units of NN hopping)
+
+    Notes
+    -----
+    Dispersion is given by
+
+    .. math::
+       E(k_x,k_y) = -2\cos(k_x) - 2\cos(k_y)
     """
     return -2*np.cos(kx) - 2*np.cos(ky)
 
 
-def dos(E,singularity=False):
-    r"""Denisty of states for 2D square lattice.
+def dos(E, singularity=False):
+    r"""Density of states for 2D square lattice.
     
     Parameters
     ----------
-    
-    E : float np.ndarray or float
-       Energy (dimensionless - in units of NN hopping).
-       
-    singularity : bool, optional
-       If `singularity`, return singularity near E=0,
-       otherwise return machine limit value for the DoS (defualt = False)
+    E : array_like
+        Energy (dimensionless - in units of NN hopping).
+    singularity : bool, default = False
+        If `singularity`, return singularity near `E`\=0,
+        otherwise return machine limit value for the DoS.
    
     Returns
     -------
-    
-    rho : float np.ndarray or float
-       Value(s) of DoS for given energies `E`
+    rho : array_like
+        Value(s) of DoS for given energies `E`.
     """
-    
-    E = np.asarray(E,dtype=float)
+    E = np.asarray(E, dtype=float)
     rho = np.zeros_like(E)
-    nonzero = (E>=E_MIN) and (E<=E_MAX)
-    
+    nonzero = (E >= E_MIN) & (E <= E_MAX)
     rho[nonzero] = 1/(2*np.pi**2)*special.ellipkm1(E[nonzero]**2/16)
-    
-    
+
     if singularity:
-        return rho    
+        return rho
     else:
         rho_at_singularity = 1/(2*np.pi**2)*special.ellipkm1(np.finfo(float).smallest_subnormal)
-        rho[rho==np.inf] = rho_at_singularity
-        rho[rho<0] = rho_at_singularity
+        rho[rho == np.inf] = rho_at_singularity
         return rho
 
 
-def HSL(N=100):
-    r"""High symmetry lines for 2D quare lattice.
+def hsl(n=100, points='GXMG'):
+    r"""High symmetry lines (HSL) for 2D quare lattice.
     
     Parameters
     ----------
-    
-    N : integer
-        Number of points per line (for the total of N*number of lines)
+    n : int, default = 100
+        Number of points per line [for the total of `n`\*(len(`points`)-1)+1 points].
+    points : str, default = 'GXMG'
+        Order of High Symmetry Points (HSP) for HSL.
     
     Returns
     -------
-    
-    kx,ky,k : float np.ndarray
-       kx,ky - coordinates along HSL
-       k - auxiliary variable with approriatly scalesd distances
-    """    
-    return _util._HSL2D(BRAVAIS_LATTICE,k_1,k_2,N=N)
-
-
-def gdos(E):
-    """Generalized density of states for %s lattice.
-    Weighted by d^2 E(k)/d kx^2
-    
-    Returns value(s) of GDoS
-    E - normalized, dimensionless energy     
+    kx, ky : ndarray
+        Coordinates along HSL.
+    k : ndarray
+        Auxiliary variable corresponding to coordinates (`kx`, `ky`) with appropriately scaled distances. Same size
+        as `kx` (`ky`).
     """
-    #handling of improper limit near 0
- 
-    E=np.asarray(E,dtype=float)
-    grho = np.zeros_like(E)
-    nonzero = (np.abs(E) <= 4) & (E!=0) & (E**2!=0)
-    grho[nonzero] = 4/(np.pi**2)*(special.ellipe(1-E[nonzero]**2/16)\
-         -1/16.*E[nonzero]**2*special.ellipkm1(E[nonzero]**2/16))
-    grho[E==0] = 0.4052847345693511
-    grho[E**2==0] = 0.4052847345693511
-    return grho 
-
-
-def disp_disc(N_1=100,N_2=100):
-    """Discretized dispersion relation for %s lattice (dimensionless).
-    
-    Returns kx,ky,disp - wave vectors and values of dispersion (meshgrid form)
-    N_1,N_2 - number of points in respective directions of primitive reciprocal vectors (default 100)
-    """
-    
-    k1 = np.linspace(-0.5,0.5,N_1)
-    k2 = np.linspace(-0.5,0.5,N_2)
-    k1,k2 = np.meshgrid(k1,k2)
-    kx = k1*k_1[0] + k2*k_2[0]
-    ky = k1*k_1[1] + k2*k_2[1]
-    return kx,ky,disp(kx,ky)
-
-
-def dos_disc(N=10**5):
-    """Discretized Denisty of States for %s lattice.
-    
-    Returns E,rho - arguments (normalized, dimensionless energy) and corresponding values of DoS
-    N - number of points (default 10**5)
-    """   
-    
-    E = np.linspace(-E_MIN,E_MAX,N)
-    return E,dos(E)
-
-
-def gdos_disc(N=10**5):
-    """Discretized Generalized Denisty of States for %s lattice.
-    
-    Returns E,rho - arguments (normalized, dimensionless energy) and corresponding values of GDoS
-    N - number of points (default 10**5)
-    """   
-    
-    E = np.linspace(-E_MIN,E_MAX,N)
-    return E,gdos(E)
+    return _util.hsl_2d(BRAVAIS_LATTICE, K_1, K_2, n=n, points=points)

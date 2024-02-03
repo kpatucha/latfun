@@ -1,0 +1,5 @@
+latfun
+======
+
+
+.. automodule:: latfun

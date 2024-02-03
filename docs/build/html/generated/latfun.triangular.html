@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>latfun.triangular &mdash; latfun 0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            latfun
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../latfun.html">latfun</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">latfun</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">latfun.triangular</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/generated/latfun.triangular.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-latfun.triangular">
+<span id="latfun-triangular"></span><h1>latfun.triangular<a class="headerlink" href="#module-latfun.triangular" title="Permalink to this heading"></a></h1>
+<p>2D triangular lattice</p>
+<p>Useful properties of infinite 2D triangular lattice with nearest neighbours
+hopping/coupling. Can be used in e.g. tight-binding type models.</p>
+<p>Everything is expressed in units of nearest neighbours hopping. By
+convention, normalized dispersion has a minimum at <span class="math notranslate nohighlight">\(k = 0\)</span>
+and has the following form</p>
+<div class="math notranslate nohighlight">
+\[E(k_x,k_y) = -2\cos(k_x) - 2\cos\left(\frac{k_x + \sqrt{3}k_y}{2}\right)
+- 2\cos\left(\frac{k_x-\sqrt{3}k_y}{2}\right)\]</div>
+<p class="rubric">Lattice parameters</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="latfun.triangular.BRAVAIS_LATTICE.html#latfun.triangular.BRAVAIS_LATTICE" title="latfun.triangular.BRAVAIS_LATTICE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BRAVAIS_LATTICE</span></code></a></p></td>
+<td><p>Hexagonal primitive</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="latfun.triangular.N_BANDS.html#latfun.triangular.N_BANDS" title="latfun.triangular.N_BANDS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">N_BANDS</span></code></a></p></td>
+<td><p>Number of bands = 1</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="latfun.triangular.E_MIN.html#latfun.triangular.E_MIN" title="latfun.triangular.E_MIN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">E_MIN</span></code></a></p></td>
+<td><p>Minimal value of the dispersion = -6</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="latfun.triangular.E_MAX.html#latfun.triangular.E_MAX" title="latfun.triangular.E_MAX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">E_MAX</span></code></a></p></td>
+<td><p>Maximal value of dispersion = 3</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="latfun.triangular.BANDWIDTH.html#latfun.triangular.BANDWIDTH" title="latfun.triangular.BANDWIDTH"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BANDWIDTH</span></code></a></p></td>
+<td><p>Total bandwidth = 9</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="latfun.triangular.D_1.html#latfun.triangular.D_1" title="latfun.triangular.D_1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">D_1</span></code></a></p></td>
+<td><p>Primitive vector <span class="math notranslate nohighlight">\(d_1 = (1,0)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="latfun.triangular.D_2.html#latfun.triangular.D_2" title="latfun.triangular.D_2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">D_2</span></code></a></p></td>
+<td><p>Primitive vector <span class="math notranslate nohighlight">\(d_2 = (\frac{1}{2},\frac{\sqrt{3}}{2})\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="latfun.triangular.K_1.html#latfun.triangular.K_1" title="latfun.triangular.K_1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">K_1</span></code></a></p></td>
+<td><p>Primitive vector in reciprocal space <span class="math notranslate nohighlight">\(k_1 = (2\pi,-\frac{2\sqrt{3}}{3}\pi)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="latfun.triangular.K_2.html#latfun.triangular.K_2" title="latfun.triangular.K_2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">K_2</span></code></a></p></td>
+<td><p>Primitive vector in reciprocal space <span class="math notranslate nohighlight">\(k_2 = (0,\frac{4\sqrt{3}}{3}\pi)\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="latfun.triangular.disp.html#latfun.triangular.disp" title="latfun.triangular.disp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disp</span></code></a>(kx, ky)</p></td>
+<td><p>Dispersion relation for 2D triangular lattice (dimensionless)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="latfun.triangular.hsl.html#latfun.triangular.hsl" title="latfun.triangular.hsl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hsl</span></code></a>([n, points])</p></td>
+<td><p>High symmetry lines (HSL) for 2D triangular lattice</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Konrad Patucha.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
